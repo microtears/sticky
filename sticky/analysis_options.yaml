@@ -7,9 +7,13 @@ include: package:pedantic/analysis_options.yaml
 # Uncomment to specify additional rules.
 linter:
   rules:
-    # - camel_case_types
-    avoid_relative_lib_imports: false
+    # avoid_relative_lib_imports: false
+    unawaited_futures: false
+
+    # checking off in the debug phase
 
 analyzer:
   exclude:
-    - "zefyr/**"
+  errors:
+    todo: ignore
+    unused_field: ignore 
