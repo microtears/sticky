@@ -1,1 +1,1 @@
-dart .\sticky_cli\bin\run.dart
+dart ./sticky_cli/bin/run.dart

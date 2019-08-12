@@ -4,24 +4,34 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "asset_generator",
+            "label": "flutter format",
             "type": "shell",
-            "command": "dart ./sticky_cli/bin/main.dart generate-assets",
+            "command": "./format.ps1",
         },
         {
-            "label": "route_generator",
+            "label": "assets build",
             "type": "shell",
-            "command": "flutter pub run build_runner build",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "command": "./assets_build.ps1",
+        },
+        {
+            "label": "route build",
+            "type": "shell",
+            "command": "./route_build.ps1",
+        },
+        {
+            "label": "route rebuild",
+            "type": "shell",
+            "command": "./route_rebuild.ps1",
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "./run.ps1",
         },
         {
             "label": "pwd",
             "type": "shell",
             "command": "pwd",
-            "group": "build"
-        }
+        },
     ]
 }

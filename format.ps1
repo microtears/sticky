@@ -1,1 +1,1 @@
-flutter format .\juice .\shine .\sticky .\sticky_cli
+flutter format ./juice ./shine ./sticky ./sticky_cli
