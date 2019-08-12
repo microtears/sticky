@@ -1,0 +1,1 @@
+dart .\sticky_cli\bin\run.dart
