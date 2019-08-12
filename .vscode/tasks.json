@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "asset_generator",
+            "type": "shell",
+            "command": "dart ./sticky_cli/bin/main.dart generate-assets",
+        },
+        {
+            "label": "route_generator",
+            "type": "shell",
+            "command": "flutter pub run build_runner build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "pwd",
+            "type": "shell",
+            "command": "pwd",
+            "group": "build"
+        }
+    ]
+}
