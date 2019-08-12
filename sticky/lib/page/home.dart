@@ -31,10 +31,11 @@ class _HomePageState extends State<HomePage> {
 
   Future<UserInfo> checkSignIn() async {
     final user = await kAuth.currentUser();
-    if (user != null)
+    if (user != null) {
       UserInfo.of(context, listen: false).user = user;
-    else
+    } else {
       Navigator.pushReplacementNamed(context, ROUTE_LOGIN_PAGE);
+    }
     return UserInfo.of(context, listen: false);
   }
 

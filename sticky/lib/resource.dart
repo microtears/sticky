@@ -4,9 +4,6 @@
 // AssetGenerator
 // **************************************************************************
 
-class Resources {
-}
+class Resources {}
 
-
-class Fonts {
-}
+class Fonts {}

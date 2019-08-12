@@ -9,7 +9,6 @@ import 'package:sticky/data/user.dart';
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
-
 }
 
 class _ProfilePageState extends State<ProfilePage> {
