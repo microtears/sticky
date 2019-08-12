@@ -40,7 +40,8 @@ dependencies:
 
   palette_generator: ^0.1.1
   # editor
-  # zefyr: ^0.6.0
+  zefyr:
+    path: ../zefyr/packages/zefyr
   # annotation
   json_annotation: ^2.4.0
   route_annotation: ^0.1.0

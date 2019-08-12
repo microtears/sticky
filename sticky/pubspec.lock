@@ -354,6 +354,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.9.6+3"
+  notus:
+    dependency: transitive
+    description:
+      name: notus
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
   outline_material_icons:
     dependency: "direct main"
     description:
@@ -431,6 +438,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.5"
+  quill_delta:
+    dependency: transitive
+    description:
+      name: quill_delta
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   quiver:
     dependency: transitive
     description:
@@ -438,6 +452,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.3"
+  quiver_hashcode:
+    dependency: transitive
+    description:
+      name: quiver_hashcode
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   route_annotation:
     dependency: "direct main"
     description:
@@ -576,6 +597,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.6"
+  url_launcher:
+    dependency: transitive
+    description:
+      name: url_launcher
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "5.1.2"
   uuid:
     dependency: transitive
     description:
@@ -618,6 +646,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.16"
+  zefyr:
+    dependency: "direct main"
+    description:
+      path: "..\\zefyr\\packages\\zefyr"
+      relative: true
+    source: path
+    version: "0.6.0"
 sdks:
   dart: ">=2.4.0 <3.0.0"
   flutter: ">=1.5.0 <2.0.0"
