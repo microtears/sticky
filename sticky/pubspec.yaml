@@ -39,7 +39,8 @@ dependencies:
   shared_preferences: ^0.5.3
 
   palette_generator: ^0.1.1
-
+  # editor
+  # zefyr: ^0.6.0
   # annotation
   json_annotation: ^2.4.0
   route_annotation: ^0.1.0
@@ -49,17 +50,17 @@ dependencies:
 
   # local_packages
   juice:
-    path: ./juice
+    path: ../juice
   shine:
-    path: ./shine
-  
+    path: ../shine
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^1.5.0
   json_serializable: ^3.0.0
   route_generator: ^0.1.2
-
+  pedantic: ^1.7.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

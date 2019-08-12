@@ -7,13 +7,9 @@ import 'package:sticky/data/user.dart';
 
 @RoutePage()
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key key, this.time, this.sticky}) : super(key: key);
-
   @override
   _ProfilePageState createState() => _ProfilePageState();
 
-  final String time;
-  final String sticky;
 }
 
 class _ProfilePageState extends State<ProfilePage> {

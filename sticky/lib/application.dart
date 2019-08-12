@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:juice/juice.dart';
 import 'package:provider/provider.dart';
 import 'package:route_annotation/route_annotation.dart';
 import 'package:sticky/application.route.dart' as route;
-import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/theme.dart';
 import 'package:sticky/data/user.dart';
 

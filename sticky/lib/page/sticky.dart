@@ -3,10 +3,15 @@ import 'package:route_annotation/route_annotation.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/text_format.dart';
 
-@RoutePage()
+@RoutePage(params: [RouteParameter("time"), RouteParameter("sticky")])
 class StickyPage extends StatefulWidget {
+  const StickyPage({Key key, this.time, this.sticky}) : super(key: key);
+
   @override
   _StickyPageState createState() => _StickyPageState();
+
+  final String time;
+  final String sticky;
 }
 
 class _StickyPageState extends State<StickyPage> {
