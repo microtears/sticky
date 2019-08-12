@@ -59,7 +59,7 @@ String getHeader() {
 bool isDirectory(String path) => FileSystemEntity.isDirectorySync(path);
 bool isFile(String path) => FileSystemEntity.isFileSync(path);
 
-void progressFile(ClassType classType, FileSystemEntity file) {
+void handleFile(ClassType classType, FileSystemEntity file) {
   if (isFile(file.path)) {
     print(file.path);
     final path = file.path.replaceAll('\\', '/');
@@ -127,10 +127,10 @@ void main(bool enableServer) async {
                 if (isFile(item.path)) return true;
                 final name = basename(item.path);
                 return !ignores.contains(name);
-              }).forEach((item) => progressFile(resourceClass, item));
+              }).forEach((item) => handleFile(resourceClass, item));
             }
           } else {
-            progressFile(resourceClass, File(path));
+            handleFile(resourceClass, File(path));
           }
           break;
         case AssetsType.font:
