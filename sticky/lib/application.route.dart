@@ -39,6 +39,9 @@ Map<String, RouteFactory> _profilePage = <String, RouteFactory>{
 };
 Map<String, RouteFactory> _stickyPage = <String, RouteFactory>{
   'sticky_page': (RouteSettings settings) => MaterialPageRoute(
-        builder: (BuildContext context) => StickyPage(),
+        builder: (BuildContext context) => StickyPage(
+          time: (settings.arguments as Map<String, dynamic>)['time'],
+          sticky: (settings.arguments as Map<String, dynamic>)['sticky'],
+        ),
       ),
 };
