@@ -33,5 +33,20 @@
             "type": "shell",
             "command": "pwd",
         },
+        {
+            "label": "flutter web with hotload",
+            "type": "shell",
+            "command": "./web.ps1",
+        },
+        {
+            "label": "flutter web release",
+            "type": "shell",
+            "command": "./web.ps1 release",
+        },
+        {
+            "label": "build web",
+            "type": "shell",
+            "command": "./web.ps1 build",
+        },
     ]
 }

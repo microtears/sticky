@@ -1,0 +1,16 @@
+# To optimize the output JavaScript, you can enable optimization flags using a build.yaml
+# file in the root of your project with the following contents:
+# See https://github.com/dart-lang/build/tree/master/build_web_compilers#configuration
+targets:
+  $default:
+    builders:
+      build_web_compilers|entrypoint:
+        generate_for:
+        - web/**.dart
+        options:
+          dart2js_args:
+            - --no-source-maps
+            # Note: the -O4 option enables a number of advanced optimizations that may 
+            # cause runtime errors in code that has not been thoroughly tested.
+            - -O4
+            

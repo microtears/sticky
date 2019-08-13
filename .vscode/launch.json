@@ -24,6 +24,20 @@
             "type": "dart",
             "flutterMode": "release",
             "showMemoryUsage": true,
-        }
+        },
+        {
+            "name": "Flutter web debug",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "cwd": "./sticky_web"
+        },
+        {
+            "name": "Flutter web release",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "cwd": "./sticky_web"
+        },
     ]
 }

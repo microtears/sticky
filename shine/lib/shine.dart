@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 export 'src/non_overlay_behavior.dart';
 export 'src/accent_color_override.dart';
 
-/// set translate statusbar
+/// Set translate statusbar
 void setTranslateStatusBar([
   SystemUiOverlayStyle style = SystemUiOverlayStyle.dark,
   Color color = const Color(0x00000000),
@@ -18,11 +18,15 @@ void setTranslateStatusBar([
   );
 }
 
-/// set fullScreen
+/// Set fullScreen
 void setFullScreen([List<SystemUiOverlay> overlays = const []]) =>
     SystemChrome.setEnabledSystemUIOverlays(overlays);
 
-/// TODO(microtears) add comment.
+/// This is a function that which can convert [color] int
+/// or [color] string to 'dart:ui/[Color]',And this is
+/// the [color] example: '#fff','#ffffff','#ffffffff'
+/// or hex number such as '0xFF111111'.
+/// The format must be R->G->B.
 Color hexColor(color) {
   if (color is int) {
     return Color(color);
