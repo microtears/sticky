@@ -39,6 +39,8 @@ dependencies:
   shared_preferences: ^0.5.3
 
   palette_generator: ^0.1.1
+
+  path_provider: ^1.2.0
   # editor
   zefyr:
     path: ../zefyr/packages/zefyr
