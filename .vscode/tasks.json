@@ -34,7 +34,7 @@
             "command": "pwd",
         },
         {
-            "label": "flutter web with hotload",
+            "label": "flutter web debug",
             "type": "shell",
             "command": "./web.ps1",
         },
