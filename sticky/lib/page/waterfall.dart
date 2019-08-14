@@ -5,6 +5,7 @@ import 'package:juice/juice.dart';
 import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/user.dart';
+import 'package:sticky/util.dart';
 
 class Waterfall extends StatelessWidget {
   @override
@@ -44,7 +45,7 @@ class Waterfall extends StatelessWidget {
                 )
               ],
             ),
-            if (snapshot.hasData && !snapshot.hasError && snapshot.data != null)
+            if (handleStreamError(snapshot))
               SliverFixedExtentList(
                 itemExtent: 50.0,
                 delegate: SliverChildBuilderDelegate(
