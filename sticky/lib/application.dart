@@ -9,24 +9,24 @@ import 'package:sticky/data/user.dart';
 @Router()
 class Application extends StatelessWidget {
   final _providers = <SingleChildCloneableWidget>[
-    ChangeNotifierProvider.value(value: ApplicationTheme()),
+    ChangeNotifierProvider.value(value: ThemeController()),
     ChangeNotifierProvider.value(value: UserInfo()),
   ];
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      child: Consumer<ApplicationTheme>(
-        builder: (context, theme, child) =>
+      child: Consumer<ThemeController>(
+        builder: (context, controller, child) =>
             AnnotatedRegion<SystemUiOverlayStyle>(
-          value: (theme.value.brightness == Brightness.light
+          value: (controller.value.brightness == Brightness.light
                   ? SystemUiOverlayStyle.dark
                   : SystemUiOverlayStyle.light)
-              .copyWith(statusBarColor: theme.value.backgroundColor),
+              .copyWith(statusBarColor: controller.stickyTheme.backgroundColor),
           child: MaterialApp(
             initialRoute: "/",
             debugShowCheckedModeBanner: false,
             onGenerateRoute: route.onGenerateRoute,
-            theme: theme.value,
+            theme: controller.value,
           ),
         ),
       ),

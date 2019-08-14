@@ -1,38 +1,51 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ApplicationTheme with ChangeNotifier {
-  ApplicationTheme() {
-    _value = stickyLight;
-  }
+class ThemeController extends ValueNotifier<ThemeData> {
+  ThemeController({ThemeData theme})
+      : super(theme == null ? stickyLight : theme);
 
-  get stickyLight => ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        backgroundColor: Colors.white,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-          color: Colors.white,
-          iconTheme: ThemeData.light().iconTheme,
-        ),
-        textTheme: ThemeData.light()
-            .textTheme
-            .apply(bodyColor: Colors.black, displayColor: Colors.black),
-      );
+  static final stickyLight = StickyThemeData(
+    brightness: Brightness.light,
+    primarySwatch: Colors.blue,
+    backgroundColor: Colors.white,
+    scaffoldBackgroundColor: Colors.white,
+    appBarTheme: AppBarTheme(
+      brightness: Brightness.light,
+      color: Colors.white,
+      iconTheme: ThemeData.light().iconTheme,
+    ),
+    textTheme: ThemeData.light()
+        .textTheme
+        .apply(bodyColor: Colors.black, displayColor: Colors.black),
+  );
 
-  ThemeData _value;
+  ThemeData get theme => value;
 
-  // TODO(microtears) set value to _value before release.
-  ThemeData get value => stickyLight;
+  StickyThemeData get stickyTheme => value as StickyThemeData;
 
-  set value(e) {
-    _value = e;
-    notifyListeners();
-  }
-
+  // TODO(microtears) debug help method, please remove before release.
   void refresh() {
+    value = StickyThemeData(
+      brightness: Brightness.light,
+      primarySwatch: Colors.blue,
+      backgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: AppBarTheme(
+        brightness: Brightness.light,
+        color: Colors.white,
+        iconTheme: ThemeData.light().iconTheme,
+      ),
+      textTheme: ThemeData.light()
+          .textTheme
+          .apply(bodyColor: Colors.black, displayColor: Colors.black),
+    );
     notifyListeners();
+  }
+
+  static ThemeController of(BuildContext context) {
+    return Provider.of<ThemeController>(context, listen: false);
   }
 }
 
@@ -182,12 +195,10 @@ class StickyThemeData extends ThemeData {
       snackBarTheme: snackBarTheme,
       bottomSheetTheme: bottomSheetTheme,
     );
-    if (backgroundColors == null) {
-      backgroundColors = [
-        rawThemeData.backgroundColor,
-        rawThemeData.backgroundColor,
-      ];
-    }
+    backgroundColors ??= [
+      rawThemeData.backgroundColor,
+      rawThemeData.backgroundColor,
+    ];
     return StickyThemeData.raw(
       backgroundColors: backgroundColors,
       backgroundImage: backgroundImage,
