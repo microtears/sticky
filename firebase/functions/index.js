@@ -17,6 +17,9 @@ exports.updateDaysOnCreate = functions
         const stickyId = context.params.stickyId;
         const createTime = snapshot.get("create_time");
         const stickyRef = store.doc(`/users/${uid}/days/${createTime}/stickies/${stickyId}`);
+        // fix: this document does not exist, it will not appear in queries or
+        // snapshots.
+        stickyRef.parent.parent.set({ auto: "" });
         stickyRef.set({
             ref: store.doc(`/users/${uid}/stickies/${stickyId}`),
         });
