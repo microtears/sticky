@@ -25,10 +25,19 @@ void _generateAssets(ArgResults args) =>
     sticky_cli.main(args.command["server"]);
 
 bool _handleHelp(ArgParser argParser, ArgResults args) {
+  final dividingLine = '-' * 64;
   if (args["help"]) {
     print([
-      "HELP",
+      "Help",
+      dividingLine,
       argParser.usage,
+      dividingLine,
+      "Command",
+      dividingLine,
+      argParser.commands.entries
+          .map((e) => "${e.key}\n${e.value.usage}")
+          .toList()
+          .join("\n"),
     ].join("\n"));
     return true;
   }
