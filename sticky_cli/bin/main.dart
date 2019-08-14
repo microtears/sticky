@@ -22,7 +22,7 @@ void _handleCommand(ArgResults args) {
 }
 
 void _generateAssets(ArgResults args) =>
-    sticky_cli.main(args.command["server"]);
+    sticky_cli.main(args.command["path"], args.command["server"]);
 
 bool _handleHelp(ArgParser argParser, ArgResults args) {
   final dividingLine = '-' * 64;
@@ -47,9 +47,11 @@ bool _handleHelp(ArgParser argParser, ArgResults args) {
 ArgParser getParser() {
   return ArgParser()
     ..addCommand(
-        COMMAND_GENERATE_ASSETS,
-        ArgParser()
-          ..addFlag("server", defaultsTo: false, abbr: "s", negatable: false))
+      COMMAND_GENERATE_ASSETS,
+      ArgParser()
+        ..addOption("path", abbr: "p", defaultsTo: "./")
+        ..addFlag("server", defaultsTo: false, abbr: "s", negatable: false),
+    )
     ..addFlag(
       "help",
       abbr: "h",

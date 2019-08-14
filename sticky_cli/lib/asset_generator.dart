@@ -89,9 +89,10 @@ enum AssetsType {
   none,
 }
 
-void main(bool enableServer) async {
+void main(String path, bool enableServer) async {
   bool workingLine = false;
-  var pubspec = File('pubspec.yaml').readAsLinesSync();
+  path ??= "./";
+  var pubspec = File(join(path, 'pubspec.yaml')).readAsLinesSync();
   final resourceClass = ClassType("Resources");
   final fontsClass = ClassType("Fonts");
   AssetsType assetType = AssetsType.none;
@@ -161,7 +162,7 @@ void main(bool enableServer) async {
     }
   }
 
-  final resourceFile = File('lib/resource.dart');
+  final resourceFile = File(join(path, 'lib/resource.dart'));
   if (resourceFile.existsSync()) resourceFile.deleteSync();
   resourceFile.createSync();
   resourceFile.writeAsStringSync(
