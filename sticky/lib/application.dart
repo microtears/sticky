@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:route_annotation/route_annotation.dart';
+import 'package:shine/shine.dart';
 import 'package:sticky/application.route.dart' as route;
 import 'package:sticky/data/theme.dart';
 import 'package:sticky/data/user.dart';
+import 'package:zefyr/zefyr.dart';
 
 @Router()
 class Application extends StatelessWidget {
@@ -22,11 +26,31 @@ class Application extends StatelessWidget {
                   ? SystemUiOverlayStyle.dark
                   : SystemUiOverlayStyle.light)
               .copyWith(statusBarColor: controller.stickyTheme.backgroundColor),
-          child: MaterialApp(
-            initialRoute: "/",
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: route.onGenerateRoute,
-            theme: controller.value,
+          child: ZefyrTheme(
+            data: controller.stickyTheme.zefyrThemeData,
+            child: MaterialApp(
+              initialRoute: "/",
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: route.onGenerateRoute,
+              theme: controller.value,
+              builder: (context, child) {
+                // TODO(microtears) Why the following expression always return
+                // false?
+                if (child is ScrollView) {
+                  log("$child is scrollview");
+                  return ScrollConfiguration(
+                    child: child,
+                    behavior: NonOverlayBehavior.nonOverlayBehavior,
+                  );
+                } else {
+                  return ScrollConfiguration(
+                    child: child,
+                    behavior: NonOverlayBehavior.nonOverlayBehavior,
+                  );
+                  ;
+                }
+              },
+            ),
           ),
         ),
       ),

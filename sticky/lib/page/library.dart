@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sticky/application.route.dart';
+import 'package:sticky/page/functions.dart';
 
 class Library extends StatelessWidget {
   @override
@@ -16,9 +16,5 @@ class Library extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void newSticky(BuildContext context) {
-    Navigator.pushNamed(context, ROUTE_STICKY_PAGE);
   }
 }

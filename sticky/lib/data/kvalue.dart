@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
+import 'package:shine/shine.dart';
 import 'package:sticky/data/text_format.dart';
 
 final kFireStore = Firestore.instance;
@@ -13,6 +14,7 @@ const kMaxDuration = Duration(days: 365);
 const kAnimeDuration = Duration(milliseconds: 300);
 const kAnimeDurationFast = Duration(milliseconds: 200);
 final kDateFormat = DateFormat("yyyy-MM-dd");
+final kDarkBlack = hexColor("#000");
 const kAvatar =
     "https://img.tuzhaozhao.com/2018/05/02/6b96a9d3fa5d67aa_600x600.jpg";
 var count = 0;

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sticky/data/kvalue.dart';
+import 'package:zefyr/zefyr.dart';
 
 class ThemeController extends ValueNotifier<ThemeData> {
   ThemeController({ThemeData theme})
@@ -16,9 +18,11 @@ class ThemeController extends ValueNotifier<ThemeData> {
       color: Colors.white,
       iconTheme: ThemeData.light().iconTheme,
     ),
-    textTheme: ThemeData.light()
-        .textTheme
-        .apply(bodyColor: Colors.black, displayColor: Colors.black),
+    textTheme: ThemeData.light().textTheme.apply(
+          bodyColor: kDarkBlack,
+          displayColor: kDarkBlack,
+        ),
+    zefyrThemeData: ZefyrThemeData(),
   );
 
   ThemeData get theme => value;
@@ -37,9 +41,11 @@ class ThemeController extends ValueNotifier<ThemeData> {
         color: Colors.white,
         iconTheme: ThemeData.light().iconTheme,
       ),
-      textTheme: ThemeData.light()
-          .textTheme
-          .apply(bodyColor: Colors.black, displayColor: Colors.black),
+      textTheme: ThemeData.light().textTheme.apply(
+            bodyColor: kDarkBlack,
+            displayColor: kDarkBlack,
+          ),
+      zefyrThemeData: ZefyrThemeData(),
     );
     notifyListeners();
   }
@@ -77,9 +83,13 @@ class StickyThemeData extends ThemeData {
   /// default value is pure background color.
   final List<Color> backgroundColors;
 
+  /// ZefyrEditor theme data.
+  final ZefyrThemeData zefyrThemeData;
+
   factory StickyThemeData({
     Uri backgroundImage,
     List<Color> backgroundColors,
+    ZefyrThemeData zefyrThemeData,
     Brightness brightness,
     MaterialColor primarySwatch,
     Color primaryColor,
@@ -199,7 +209,9 @@ class StickyThemeData extends ThemeData {
       rawThemeData.backgroundColor,
       rawThemeData.backgroundColor,
     ];
+    zefyrThemeData ??= ZefyrThemeData();
     return StickyThemeData.raw(
+      zefyrThemeData: zefyrThemeData,
       backgroundColors: backgroundColors,
       backgroundImage: backgroundImage,
       brightness: rawThemeData.brightness,
@@ -263,6 +275,7 @@ class StickyThemeData extends ThemeData {
   const StickyThemeData.raw({
     @required this.backgroundImage,
     @required this.backgroundColors,
+    @required this.zefyrThemeData,
     Brightness brightness,
     MaterialColor primarySwatch,
     Color primaryColor,

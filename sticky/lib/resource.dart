@@ -5,8 +5,8 @@
 // **************************************************************************
 
 class Resources {
+  /// ![](http://127.0.0.1:2227/assets/doc.json)
+  static final String doc = 'assets/doc.json';
 }
 
-
-class Fonts {
-}
+class Fonts {}

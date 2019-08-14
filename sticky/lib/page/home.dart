@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:route_annotation/route_annotation.dart';
+import 'package:shine/shine.dart';
 import 'package:sticky/application.route.dart';
-import 'package:sticky/data/user.dart';
 import 'package:sticky/data/kvalue.dart';
+import 'package:sticky/data/theme.dart';
+import 'package:sticky/data/user.dart';
+import 'package:sticky/page/functions.dart';
 import 'package:sticky/page/library.dart';
 import 'package:sticky/page/waterfall.dart';
 
@@ -54,25 +59,28 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            BottomNavigationBar(
-              backgroundColor: Theme.of(context).backgroundColor,
-              elevation: 0,
-              currentIndex: currentIndex,
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text("Home"),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  title: Text("Search"),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.library_books),
-                  title: Text("Your Library"),
-                ),
-              ],
-              onTap: handleBottomNavigationItemTap,
+            BottomNavigationBarWrap(
+              child: BottomNavigationBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                elevation: 0,
+                currentIndex: currentIndex,
+                items: <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    title: Text("Home"),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.search),
+                    title: Text("Search"),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.library_books),
+                    title: Text("Your Library"),
+                  ),
+                ],
+                onTap: handleBottomNavigationItemTap,
+              ),
+              onLongPress: onLongPress,
             )
           ],
         ),
@@ -96,5 +104,14 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       currentIndex = value;
     });
+  }
+
+  void onLongPress(int value) {
+    if (value == 0) {
+      newSticky(context);
+    } else if (value == 1) {
+      ThemeController.of(context).refresh();
+      log("refresh theme");
+    }
   }
 }

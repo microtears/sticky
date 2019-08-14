@@ -10,6 +10,7 @@
             "type": "dart",
             "flutterMode": "debug",
             "showMemoryUsage": true,
+            "cwd": "./sticky"
         },
         {
             "name": "Flutter profile",
@@ -17,6 +18,7 @@
             "type": "dart",
             "flutterMode": "profile",
             "showMemoryUsage": true,
+            "cwd": "./sticky"
         },
         {
             "name": "Flutter release",
@@ -24,6 +26,7 @@
             "type": "dart",
             "flutterMode": "release",
             "showMemoryUsage": true,
+            "cwd": "./sticky"
         },
         {
             "name": "Flutter web debug",

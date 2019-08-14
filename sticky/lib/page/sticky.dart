@@ -1,16 +1,25 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:route_annotation/route_annotation.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/text_format.dart';
+import 'package:sticky/data/user.dart';
+import 'package:sticky/resource.dart';
+import 'package:zefyr/zefyr.dart';
 
-@RoutePage(params: [RouteParameter("time"), RouteParameter("sticky")])
+@RoutePage(params: [RouteParameter("sticky")])
 class StickyPage extends StatefulWidget {
-  const StickyPage({Key key, this.time, this.sticky}) : super(key: key);
+  const StickyPage({Key key, this.sticky}) : super(key: key);
 
   @override
   _StickyPageState createState() => _StickyPageState();
 
-  final String time;
   final String sticky;
 }
 
@@ -24,7 +33,48 @@ class _StickyPageState extends State<StickyPage> {
   Color stickColor = kStickyColors[3];
 
   // String get title => editer.text.substring(0, editer.text.indexOf("\n"));
-  String get title => kDateFormat.format(new DateTime.now());
+  String get title => kDateFormat.format(DateTime.now());
+
+  ZefyrController text;
+  NotusDocument document;
+  ScrollController scrollController;
+  double titleStartOffset = 16;
+  final focus = FocusNode();
+
+  DocumentSnapshot snapshot;
+  StreamSubscription subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    rootBundle.loadString(Resources.doc).then((value) => setState(() {
+          document = NotusDocument.fromJson(jsonDecode(value) as List);
+          text = ZefyrController(document);
+        }));
+    document = NotusDocument();
+    text = ZefyrController(document);
+    scrollController = ScrollController()
+      ..addListener(() {
+        setState(() {
+          titleStartOffset = min(52, 16 + scrollController.offset / 5);
+        });
+      });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    subscription = stickyReference
+        .snapshots()
+        .listen((data) => setState(() => snapshot = data));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+    subscription.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +82,39 @@ class _StickyPageState extends State<StickyPage> {
       body: Stack(
         children: <Widget>[
           CustomScrollView(
+            controller: scrollController,
             slivers: <Widget>[
               SliverAppBar(
                 iconTheme: Theme.of(context).iconTheme,
                 brightness: Theme.of(context).brightness,
-                expandedHeight: 120,
+                expandedHeight: 224,
                 backgroundColor: Theme.of(context).backgroundColor,
                 elevation: 0,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding:
-                      EdgeInsetsDirectional.only(start: 16, bottom: 16),
+                  titlePadding: EdgeInsetsDirectional.only(
+                    start: titleStartOffset,
+                    bottom: 16,
+                  ),
                   title: Text(
                     title,
                     style: Theme.of(context).textTheme.title,
                   ),
+                  background: snapshot?.data != null
+                      ? Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                snapshot.data["preview"],
+                              ),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                Colors.white.withOpacity(0.2),
+                                BlendMode.lighten,
+                              ),
+                            ),
+                          ),
+                        )
+                      : null,
                 ),
                 actions: <Widget>[
                   IconButton(
@@ -56,25 +125,18 @@ class _StickyPageState extends State<StickyPage> {
               ),
               SliverToBoxAdapter(
                 child: Container(
-                  color: stickColor,
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height,
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        top: 8,
-                        bottom: 4,
-                      ),
+                  height: 1200,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: ZefyrScaffold(
+                    child: ZefyrView(
+                      document: document,
+                      // controller: text,
+                      // focusNode: focus,
+                      imageDelegate: CustomImageDelegate(),
                     ),
-                    controller: editer,
-                    maxLines: null,
-                    minLines: 7,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           Positioned(
@@ -156,4 +218,26 @@ class _StickyPageState extends State<StickyPage> {
   void updateFormat(TextFormat format) {}
 
   void deleteSticky() {}
+
+  DocumentReference get stickyReference {
+    final data = UserInfo.of(context).data;
+    return data.collection("stickies").document(widget.sticky);
+  }
+}
+
+/// Custom image delegate used by this example to load image from application
+/// assets.
+///
+/// Default image delegate only supports [FileImage]s.
+class CustomImageDelegate extends ZefyrDefaultImageDelegate {
+  @override
+  Widget buildImage(BuildContext context, String imageSource) {
+    // We use custom "asset" scheme to distinguish asset images from other files.
+    if (imageSource.startsWith('asset://')) {
+      final asset = new AssetImage(imageSource.replaceFirst('asset://', ''));
+      return new Image(image: asset);
+    } else {
+      return super.buildImage(context, imageSource);
+    }
+  }
 }
