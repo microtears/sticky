@@ -24,11 +24,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: checkSignIn(),
-      builder: (context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return buildInit(context);
-        } else {
+      builder: (context, AsyncSnapshot<UserInfo> snapshot) {
+        if (snapshot.hasData && snapshot.data.user != null) {
           return buildHome(context);
+        } else {
+          return buildInit(context);
         }
       },
     );
@@ -61,7 +61,8 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarWrap(
               child: BottomNavigationBar(
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor:
+                    StickyTheme.of(context).bottomNavigationBarColor,
                 elevation: 0,
                 currentIndex: currentIndex,
                 items: <BottomNavigationBarItem>[

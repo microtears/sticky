@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:juice/juice.dart';
 import 'package:route_annotation/route_annotation.dart';
+import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/user.dart';
 
@@ -41,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: openSettings,
+            onPressed: () => openSettings(context),
           )
         ],
       ),
@@ -67,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: <Widget>[
                   SizedBox(height: top),
                   Container(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -93,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Container(
-                    color: Colors.white,
+                    color: Theme.of(context).backgroundColor,
                     height: MediaQuery.of(context).size.height - top / 2,
                   ),
                 ],
@@ -105,5 +106,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void openSettings() {}
+  void openSettings(BuildContext context) =>
+      Navigator.pushNamed(context, ROUTE_SETTING_PAGE);
 }

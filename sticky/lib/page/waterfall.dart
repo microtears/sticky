@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:juice/juice.dart';
-import 'package:shine/shine.dart';
 import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/user.dart';
