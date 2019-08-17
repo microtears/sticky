@@ -20,9 +20,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _email = TextEditingController();
   final _password = TextEditingController();
+  final _password2 = TextEditingController();
   var buildContext;
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> loading;
   bool isLoading = false;
+  bool isSignUp = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "登录",
+                "Sticky",
                 style: Theme.of(context).textTheme.display1,
               ),
             ),
@@ -60,6 +62,17 @@ class _LoginPageState extends State<LoginPage> {
               controller: _password,
             ),
           ),
+          if (isSignUp)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: "确认密码",
+                ),
+                controller: _password2,
+              ),
+            ),
           SizedBox(height: 64),
           Align(
             alignment: Alignment.centerRight,
@@ -67,12 +80,12 @@ class _LoginPageState extends State<LoginPage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text("登录"),
+                  Text(isSignUp ? "注册" : "登录"),
                   SizedBox(width: 32),
                   Icon(Icons.arrow_forward),
                 ],
               ),
-              onPressed: handleSingIn,
+              onPressed: isSignUp ? handleSingUp : handleSingIn,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(24),
@@ -136,31 +149,32 @@ class _LoginPageState extends State<LoginPage> {
       closeLoading();
       backHome();
     } on PlatformException catch (e) {
-      handleError(e, e.message);
+      handleError(e.message, e);
     }
   }
 
   Future googleSingIn() async {
     if (isLoading) return;
     showLoading();
+    final GoogleSignInAccount googleUser = await kGoogleSignIn.signIn();
+    if (googleUser != null) {
+      try {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
 
-    try {
-      final GoogleSignInAccount googleUser = await kGoogleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      final user = await kAuth.signInWithCredential(credential);
-      log("signed in " + user.displayName);
-      closeLoading();
-      backHome();
-    } on PlatformException catch (e) {
-      handleError(e, e.message);
-    } catch (e) {
-      handleError(e, e.toString());
+        final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        final user = await kAuth.signInWithCredential(credential);
+        log("signed in " + user.displayName);
+        closeLoading();
+        backHome();
+      } on PlatformException catch (e) {
+        handleError(e.message, e);
+      } catch (e) {
+        handleError(e.toString(), e);
+      }
     }
   }
 
@@ -171,6 +185,30 @@ class _LoginPageState extends State<LoginPage> {
     Scaffold.of(buildContext).showSnackBar(StickySnackBar(
       content: Text("Not yet implement."),
     ));
+  }
+
+  Future handleSingUp() async {
+    if (isLoading) return;
+    showLoading();
+    final email = _email.text;
+    final password = _password.text;
+    final password2 = _password2.text;
+    log("sign up:");
+    log("email : " + email);
+    log("pwd : " + password);
+    log("pwd confirm : " + password2);
+    try {
+      checkPasswordComplexity(password, password2);
+      final user = await kAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      log("signed up " + user.uid);
+      closeLoading();
+      backHome();
+    } catch (e) {
+      handleError(e.toString(), e);
+    }
   }
 
   void showLoading() {
@@ -197,9 +235,9 @@ class _LoginPageState extends State<LoginPage> {
     isLoading = false;
   }
 
-  void handleError(error, message) {
+  void handleError(String message, [Object error]) {
     closeLoading();
-    log(error.toString());
+    log(error?.toString());
     Scaffold.of(buildContext).showSnackBar(StickySnackBar(
       content: Text(message),
     ));
@@ -210,6 +248,12 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       u.UserInfo.of(context, listen: false).user = user;
       Navigator.pushReplacementNamed(context, ROUTE_HOME);
+    }
+  }
+
+  void checkPasswordComplexity(String password, String password2) {
+    if (password != password2) {
+      throw Exception("两次输入的密码不一致");
     }
   }
 }

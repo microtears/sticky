@@ -14,4 +14,9 @@ void main() {
     final x = CustomScrollView();
     expect(x is ScrollView, true);
   });
+  // testWidgets("Geting text must not empty", (tester) async {
+  //   final text = await fetchHitokoto();
+  //   print(text);
+  //   expect(text.trim().isNotEmpty, true);
+  // });
 }

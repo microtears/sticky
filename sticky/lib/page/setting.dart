@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:route_annotation/route_annotation.dart';
-import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/theme.dart';
-import 'package:sticky/data/user.dart';
 import 'package:sticky/page/functions.dart';
 
 @RoutePage()

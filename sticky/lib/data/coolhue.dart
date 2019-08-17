@@ -7,12 +7,12 @@ import 'package:shine/shine.dart';
 import 'package:path_provider/path_provider.dart' as app_path;
 import 'package:path/path.dart' as path;
 
-const kUrl =
+const _kUrl =
     "https://raw.githubusercontent.com/webkul/coolhue/master/scripts/coolhue.json";
-const kFilename = "coolhue.json";
+const _kFilename = "coolhue.json";
 
 Future<String> _fetchCoolHue() async {
-  final response = await http.read(kUrl);
+  final response = await http.read(_kUrl);
   final start = '{"colors": ';
   final end = '}';
   return "$start$response$end";
@@ -37,7 +37,7 @@ Future<List<List<Color>>> get coolhue async {
     return _coolhue;
   }
   final documents = await app_path.getApplicationDocumentsDirectory();
-  final file = File(path.join(documents.path, kFilename));
+  final file = File(path.join(documents.path, _kFilename));
   // check file
   if (await file.exists()) {
     _coolhue = await _computeCoolHue(await file.readAsString());
