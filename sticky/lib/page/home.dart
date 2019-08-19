@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:route_annotation/route_annotation.dart';
-import 'package:shine/shine.dart';
+import 'package:shine/shine.dart' as shine;
 import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/theme.dart';
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            BottomNavigationBarWrap(
+            shine.BottomNavigationBarWrap(
               child: BottomNavigationBar(
                 backgroundColor:
                     StickyTheme.of(context).bottomNavigationBarColor,

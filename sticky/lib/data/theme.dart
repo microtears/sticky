@@ -42,13 +42,16 @@ class ThemeController extends ValueNotifier<ThemeData> {
           bodyColor: hexColor("#535D7E"),
           displayColor: hexColor("#535D7E"),
         )
-        .merge(TextTheme(
-          subhead: TextStyle(color: hexColor("#A4A4BD")),
-          display1: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 26,
+        .merge(
+          TextTheme(
+            subhead: TextStyle(color: hexColor("#A4A4BD")),
+            display1: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+            ),
+            button: TextStyle(color: Colors.white),
           ),
-        )),
+        ),
     zefyrThemeData: ZefyrThemeData(),
   );
 

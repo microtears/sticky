@@ -15,7 +15,7 @@ class WelcomePage extends StatelessWidget {
         child: PageView(
           children: <Widget>[
             Center(
-              child: Hero(tag: kLogoTag, child: StickyLogo()),
+              child: StickyLogo(),
             ),
             Column(
               children: <Widget>[
