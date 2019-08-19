@@ -5,6 +5,9 @@
 // **************************************************************************
 
 class Resources {
+		/// ![](http://127.0.0.1:2227/assets/circles.svg)
+		static final String circles = 'assets/circles.svg';
+
 		/// ![](http://127.0.0.1:2227/assets/doc.json)
 		static final String doc = 'assets/doc.json';
 

@@ -28,6 +28,9 @@ void repeat(int conut, VoidCallback action) {
 T tryRun<T>(T defaultValue, ResultCallback<T> action, {TestCallback<T> test}) {
   try {
     final T value = action();
+    if (test == null) {
+      return value;
+    }
     if (test(value)) {
       return value;
     } else {

@@ -40,7 +40,7 @@ class Application extends StatelessWidget {
                   : controller.theme.backgroundColor.withOpacity(1),
               child: MaterialApp(
                 initialRoute: "/",
-                debugShowCheckedModeBanner: false,
+                debugShowCheckedModeBanner: true,
                 onGenerateRoute: route.onGenerateRoute,
                 theme: controller.value,
                 builder: buildChild,

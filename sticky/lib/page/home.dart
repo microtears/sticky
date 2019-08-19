@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:route_annotation/route_annotation.dart';
 import 'package:shine/shine.dart' as shine;
 import 'package:sticky/application.route.dart';
@@ -10,6 +11,7 @@ import 'package:sticky/data/user.dart';
 import 'package:sticky/page/functions.dart';
 import 'package:sticky/page/library.dart';
 import 'package:sticky/page/waterfall.dart';
+import 'package:sticky/resource.dart';
 
 @RoutePage(isInitialRoute: true)
 class HomePage extends StatefulWidget {
@@ -53,7 +55,11 @@ class _HomePageState extends State<HomePage> {
               child: IndexedStack(
                 index: currentIndex,
                 children: <Widget>[
-                  Waterfall(),
+                  Waterfall(
+                    onSearchButton: () => setState(() {
+                      currentIndex = 1;
+                    }),
+                  ),
                   Container(),
                   Library(),
                 ],
