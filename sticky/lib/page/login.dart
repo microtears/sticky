@@ -10,6 +10,7 @@ import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/snackbar.dart';
 import 'package:sticky/data/user.dart' as u;
+import 'package:sticky/sticky_logo.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -26,107 +27,183 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
   bool isSignUp = false;
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: Column(
+  //       children: <Widget>[
+  //         Spacer(flex: 1),
+  //         Padding(
+  //           padding: const EdgeInsets.symmetric(horizontal: 16),
+  //           child: Align(
+  //             alignment: Alignment.centerLeft,
+  //             child: Text(
+  //               "Sticky",
+  //               style: Theme.of(context).textTheme.display1,
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: 32),
+  //         Padding(
+  //           padding: const EdgeInsets.symmetric(horizontal: 20),
+  //           child: TextField(
+  //             decoration: InputDecoration(
+  //               labelText: "邮箱",
+  //             ),
+  //             controller: _email,
+  //           ),
+  //         ),
+  //         Padding(
+  //           padding: const EdgeInsets.symmetric(horizontal: 20),
+  //           child: TextField(
+  //             obscureText: true,
+  //             decoration: InputDecoration(
+  //               labelText: "密码",
+  //             ),
+  //             controller: _password,
+  //           ),
+  //         ),
+  //         if (isSignUp)
+  //           Padding(
+  //             padding: const EdgeInsets.symmetric(horizontal: 20),
+  //             child: TextField(
+  //               obscureText: true,
+  //               decoration: InputDecoration(
+  //                 labelText: "确认密码",
+  //               ),
+  //               controller: _password2,
+  //             ),
+  //           ),
+  //         SizedBox(height: 64),
+  //         Align(
+  //           alignment: Alignment.centerRight,
+  //           child: FlatButton(
+  //             child: Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: <Widget>[
+  //                 Text(isSignUp ? "注册" : "登录"),
+  //                 SizedBox(width: 32),
+  //                 Icon(Icons.arrow_forward),
+  //               ],
+  //             ),
+  //             onPressed: isSignUp ? handleSingUp : handleSingIn,
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.only(
+  //                 topLeft: Radius.circular(24),
+  //                 bottomLeft: Radius.circular(24),
+  //               ),
+  //             ),
+  //             color: Colors.amberAccent,
+  //           ),
+  //         ),
+  //         SizedBox(height: 64),
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //           children: <Widget>[
+  //             OutlineButton.icon(
+  //               icon: Icon(FontAwesomeIcons.google, size: 14),
+  //               label: Text("Google"),
+  //               onPressed: googleSingIn,
+  //               shape: StadiumBorder(),
+  //               textColor: Colors.red,
+  //               highlightedBorderColor: Colors.red,
+  //               borderSide: BorderSide(color: Colors.red),
+  //             ),
+  //             OutlineButton.icon(
+  //               icon: Icon(FontAwesomeIcons.twitter, size: 14),
+  //               label: Text("Twitter"),
+  //               onPressed: twitterSingIn,
+  //               shape: StadiumBorder(),
+  //               textColor: Colors.blue,
+  //               highlightedBorderColor: Colors.blue,
+  //               borderSide: BorderSide(color: Colors.blue),
+  //             ),
+  //           ],
+  //         ),
+  //         Spacer(flex: 1),
+  //         LayoutBuilder(
+  //           builder: (BuildContext context, BoxConstraints constraints) {
+  //             buildContext = context;
+  //             return Container();
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Spacer(flex: 1),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Sticky",
-                style: Theme.of(context).textTheme.display1,
+      body: Padding(
+        padding: EdgeInsetsDirectional.only(start: 32, end: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(height: 84),
+            Hero(tag: kLogoTag, child: StickyLogo()),
+            Spacer(),
+            Text(
+              "Sign In Now",
+              style: Theme.of(context).textTheme.display1,
+            ),
+            Text(
+              "Sign in with your account, enter your email and password to get started.",
+              style: Theme.of(context).textTheme.subhead,
+            ),
+            SizedBox(height: 24),
+            Container(
+              height: 48,
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).accentColor.withOpacity(0.5),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 32),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "邮箱",
-              ),
-              controller: _email,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "密码",
-              ),
-              controller: _password,
-            ),
-          ),
-          if (isSignUp)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            SizedBox(height: 24),
+            Container(
+              height: 48,
               child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: "确认密码",
-                ),
-                controller: _password2,
-              ),
-            ),
-          SizedBox(height: 64),
-          Align(
-            alignment: Alignment.centerRight,
-            child: FlatButton(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(isSignUp ? "注册" : "登录"),
-                  SizedBox(width: 32),
-                  Icon(Icons.arrow_forward),
-                ],
-              ),
-              onPressed: isSignUp ? handleSingUp : handleSingIn,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  bottomLeft: Radius.circular(24),
+                  labelText: "Password",
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).accentColor.withOpacity(0.5),
+                    ),
+                  ),
                 ),
               ),
-              color: Colors.amberAccent,
             ),
-          ),
-          SizedBox(height: 64),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              OutlineButton.icon(
-                icon: Icon(FontAwesomeIcons.google, size: 14),
-                label: Text("Google"),
-                onPressed: googleSingIn,
-                shape: StadiumBorder(),
-                textColor: Colors.red,
-                highlightedBorderColor: Colors.red,
-                borderSide: BorderSide(color: Colors.red),
+            SizedBox(height: 24),
+            Container(
+              constraints: BoxConstraints.expand(height: 48),
+              child: RaisedButton(
+                child: Text("Next"),
+                elevation: 0,
+                onPressed: () {},
               ),
-              OutlineButton.icon(
-                icon: Icon(FontAwesomeIcons.twitter, size: 14),
-                label: Text("Twitter"),
-                onPressed: twitterSingIn,
-                shape: StadiumBorder(),
-                textColor: Colors.blue,
-                highlightedBorderColor: Colors.blue,
-                borderSide: BorderSide(color: Colors.blue),
+            ),
+            SizedBox(height: 24),
+            Center(
+              child: Text(
+                "Forget password?",
+                style: Theme.of(context).textTheme.subhead,
               ),
-            ],
-          ),
-          Spacer(flex: 1),
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              buildContext = context;
-              return Container();
-            },
-          ),
-        ],
+            ),
+            Center(
+              child: FlatButton(
+                child: Text("Reset"),
+                onPressed: () {},
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

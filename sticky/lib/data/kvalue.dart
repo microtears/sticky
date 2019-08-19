@@ -19,6 +19,8 @@ const kAvatar =
     "https://img.tuzhaozhao.com/2018/05/02/6b96a9d3fa5d67aa_600x600.jpg";
 var count = 0;
 
+const kLogoTag = "sticky_logo_hero_tag";
+
 const kTestBackground =
     "https://cdn.pixabay.com/photo/2019/08/04/20/05/blossom-4384646_960_720.jpg";
 

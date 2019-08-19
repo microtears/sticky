@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shine/shine.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:zefyr/zefyr.dart';
 
@@ -12,25 +13,42 @@ class ThemeController extends ValueNotifier<ThemeData> {
 
   static final stickyLight = StickyThemeData(
     brightness: Brightness.light,
-    primarySwatch: Colors.blue,
+    // primarySwatch: Colors.blue,
+    accentColor: hexColor("#4e53f7"),
+
     backgroundColor: Colors.white,
     scaffoldBackgroundColor: Colors.white,
     bottomNavigationBarColor: Colors.transparent,
+    buttonTheme: ButtonThemeData(
+      buttonColor: hexColor("#4e53f7"),
+      height: 48,
+      textTheme: ButtonTextTheme.primary,
+    ),
     appBarTheme: AppBarTheme(
+      elevation: 0,
       brightness: Brightness.light,
       color: Colors.transparent,
       textTheme: TextTheme(
         title: TextStyle(
-          color: Colors.black,
+          color: hexColor("#535D7E"),
           fontSize: 21,
         ),
       ),
       iconTheme: ThemeData.light().iconTheme,
     ),
-    textTheme: ThemeData.light().textTheme.apply(
-          bodyColor: kDarkBlack,
-          displayColor: kDarkBlack,
-        ),
+    textTheme: ThemeData.light()
+        .textTheme
+        .apply(
+          bodyColor: hexColor("#535D7E"),
+          displayColor: hexColor("#535D7E"),
+        )
+        .merge(TextTheme(
+          subhead: TextStyle(color: hexColor("#A4A4BD")),
+          display1: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 26,
+          ),
+        )),
     zefyrThemeData: ZefyrThemeData(),
   );
 

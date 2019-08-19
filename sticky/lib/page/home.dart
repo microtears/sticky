@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     if (user != null) {
       UserInfo.of(context, listen: false).user = user;
     } else {
-      Navigator.pushReplacementNamed(context, ROUTE_LOGIN_PAGE);
+      Navigator.pushReplacementNamed(context, ROUTE_WELCOME_PAGE);
     }
     return UserInfo.of(context, listen: false);
   }
