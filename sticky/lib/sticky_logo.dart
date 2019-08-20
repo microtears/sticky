@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:shine/shine.dart' as shine;
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:shine/shine.dart';
 
 class StickyLogo extends StatefulWidget {
   final StickyLogoController controller;
@@ -65,7 +66,7 @@ class _StickyLogoState extends State<StickyLogo>
 
   @override
   Widget build(BuildContext context) {
-    final color = shine.hexColor("#4e53f7");
+    final color = hexColor("#4e53f7");
     return GestureDetector(
       onTap: () {
         _controller.isLoading = !_controller.isLoading;
@@ -79,7 +80,7 @@ class _StickyLogoState extends State<StickyLogo>
             _controller.isLoading
                 ? Padding(
                     padding: EdgeInsets.all(2),
-                    child: shine.CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(color),
                     ),
                   )

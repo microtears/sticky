@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:route_annotation/route_annotation.dart';
 import 'package:sticky/application.route.dart';
-import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/resource.dart';
 import 'package:sticky/sticky_logo.dart';
 
@@ -24,7 +23,7 @@ class WelcomePage extends StatelessWidget {
                   child: FlatButton(
                     textColor: Theme.of(context).disabledColor,
                     child: Text("Skip"),
-                    onPressed: skip,
+                    onPressed: () => skip(context),
                   ),
                 ),
                 Spacer(),
@@ -54,7 +53,7 @@ class WelcomePage extends StatelessWidget {
     );
   }
 
-  void skip() {}
+  void skip(BuildContext context) => next(context);
 
   void next(BuildContext context) {
     Navigator.pushReplacementNamed(context, ROUTE_START_PAGE);

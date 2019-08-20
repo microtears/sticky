@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:route_annotation/route_annotation.dart';
+import 'package:sticky/application.route.dart';
+import 'package:sticky/data/user.dart';
 
 @RoutePage()
 class CompleteProfilePage extends StatefulWidget {
@@ -8,6 +11,8 @@ class CompleteProfilePage extends StatefulWidget {
 }
 
 class _CompleteProfilePageState extends State<CompleteProfilePage> {
+  final _name = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +22,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
             Icons.keyboard_backspace,
             color: Theme.of(context).accentColor,
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: backHome,
         ),
       ),
       body: Padding(
@@ -86,6 +91,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
             Container(
               height: 48,
               child: TextField(
+                controller: _name,
                 decoration: InputDecoration(
                   labelText: "Name",
                   border: OutlineInputBorder(
@@ -115,5 +121,18 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
 
   void chosePicture() {}
 
-  finish(BuildContext context) {}
+  void updateName() {
+    final userUpdateInfo = prefix0.UserUpdateInfo()..displayName = _name.text;
+    UserInfo.of(context, listen: false).user.updateProfile(userUpdateInfo);
+  }
+
+  void finish(BuildContext context) {
+    updateName();
+  }
+
+  void backHome() {
+    Navigator.of(context)
+      ..pop()
+      ..pushReplacementNamed(ROUTE_HOME);
+  }
 }

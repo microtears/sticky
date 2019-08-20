@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/rendering.dart';
 import 'package:juice/juice.dart';
-import 'package:shine/shine.dart' as shine;
+import 'package:shine/shine.dart';
 import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/user.dart';
@@ -51,10 +50,7 @@ class _WaterfallState extends State<Waterfall> {
       () => user.photoUrl,
       test: (String e) => e.isNotEmpty,
     );
-    count++;
     final iconSize = 48.0;
-    final avatarRotateAngle = tryRun(
-        0.0, () => _controller.offset / MediaQuery.of(context).size.height);
     return StreamBuilder<QuerySnapshot>(
       stream: userInfo.data.collection("days").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -74,15 +70,12 @@ class _WaterfallState extends State<Waterfall> {
                 ),
               ),
               actions: <Widget>[
-                Transform.rotate(
-                  angle: avatarRotateAngle,
-                  child: IconButton(
-                    icon: CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(avatar),
-                      radius: 16,
-                    ),
-                    onPressed: () => openProfile(context),
+                IconButton(
+                  icon: CircleAvatar(
+                    backgroundImage: CachedNetworkImageProvider(avatar),
+                    radius: 16,
                   ),
+                  onPressed: () => openProfile(context),
                 )
               ],
             ),
@@ -138,7 +131,7 @@ class _WaterfallState extends State<Waterfall> {
                             width: iconSize,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: shine.hexColor("#7540EE"),
+                              color: hexColor("#7540EE"),
                             ),
                             child: Center(
                               child: IconButton(

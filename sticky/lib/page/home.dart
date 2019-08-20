@@ -1,17 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:route_annotation/route_annotation.dart';
-import 'package:shine/shine.dart' as shine;
+import 'package:shine/shine.dart';
 import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/theme.dart';
 import 'package:sticky/data/user.dart';
 import 'package:sticky/page/functions.dart';
 import 'package:sticky/page/library.dart';
+import 'package:sticky/page/search.dart';
 import 'package:sticky/page/waterfall.dart';
-import 'package:sticky/resource.dart';
 
 @RoutePage(isInitialRoute: true)
 class HomePage extends StatefulWidget {
@@ -48,49 +47,47 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildHome(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: IndexedStack(
-                index: currentIndex,
-                children: <Widget>[
-                  Waterfall(
-                    onSearchButton: () => setState(() {
-                      currentIndex = 1;
-                    }),
-                  ),
-                  Container(),
-                  Library(),
-                ],
-              ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: IndexedStack(
+              index: currentIndex,
+              children: <Widget>[
+                Waterfall(
+                  onSearchButton: () => setState(() {
+                    currentIndex = 1;
+                  }),
+                ),
+                Search(),
+                Library(),
+              ],
             ),
-            shine.BottomNavigationBarWrap(
-              child: BottomNavigationBar(
-                backgroundColor:
-                    StickyTheme.of(context).bottomNavigationBarColor,
-                elevation: 0,
-                currentIndex: currentIndex,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    title: Text("Home"),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.search),
-                    title: Text("Search"),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.library_books),
-                    title: Text("Your Library"),
-                  ),
-                ],
-                onTap: handleBottomNavigationItemTap,
-              ),
-              onLongPress: onLongPress,
-            )
-          ],
-        ),
+          ),
+          BottomNavigationBarWrap(
+            child: BottomNavigationBar(
+              backgroundColor:
+                  StickyTheme.of(context).bottomNavigationBarColor,
+              elevation: 0,
+              currentIndex: currentIndex,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text("Home"),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search),
+                  title: Text("Search"),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.library_books),
+                  title: Text("Your Library"),
+                ),
+              ],
+              onTap: handleBottomNavigationItemTap,
+            ),
+            onLongPress: onLongPress,
+          )
+        ],
       ),
     );
   }

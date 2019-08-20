@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:shine/shine.dart';
 import 'package:sticky/data/text_format.dart';
+import 'package:sticky/tags.dart';
 
 final kFireStore = Firestore.instance;
 final kDocument = Firestore.instance.collection("common");
@@ -48,3 +50,20 @@ const kSimpleText = """
 监督：真壁幸紀、湯浅弘章、山岸聖太、川井隼人
 
 """;
+
+const kPasswordLengthErrorMessage =
+    "Your password must be at least 5 characters long and cannot contain spaces.";
+const kPasswordConfirmErrorMessage = "Your password can not contain spaces.";
+const kPasswordSpacesErrorMessage = "The two passwords you typed do not match.";
+
+const kTags = [
+  Tag("Travel", icon: FontAwesomeIcons.route),
+  Tag("Food & Drink", icon: FontAwesomeIcons.egg),
+  Tag("Film", icon: FontAwesomeIcons.film),
+  Tag("Bussiness & Work", icon: FontAwesomeIcons.globe),
+  Tag("People", icon: FontAwesomeIcons.userFriends),
+  Tag("Health", icon: FontAwesomeIcons.running),
+  Tag("Password", icon: FontAwesomeIcons.key),
+  Tag("Quick Tips", icon: FontAwesomeIcons.bullhorn),
+  Tag("Code", icon: FontAwesomeIcons.terminal),
+];

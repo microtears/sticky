@@ -22,16 +22,12 @@ class _LoginPageState extends State<LoginPage> {
   // final _password2 = TextEditingController();
   final _logo = StickyLogoController();
   var buildContext;
-  // ScaffoldFeatureController<SnackBar, SnackBarClosedReason> loading;
-  // bool isLoading = false;
 
   bool get isLoading => _logo.isLoading;
 
   set isLoading(bool isLoading) {
     _logo.isLoading = isLoading;
   }
-
-  // bool isSignUp = false;
 
   @override
   void dispose() {
@@ -179,9 +175,4 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void checkPasswordComplexity(String password, String password2) {
-    if (password != password2) {
-      throw Exception("两次输入的密码不一致");
-    }
-  }
 }

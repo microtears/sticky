@@ -11,3 +11,16 @@ void signOut(BuildContext context) {
     return route.isFirst;
   });
 }
+
+bool checkPasswordComplexity(String password, String password2) {
+  if (password.length < 6) {
+    throw Exception(kPasswordLengthErrorMessage);
+  }
+  if (RegExp(r"\s+").hasMatch(password)) {
+    throw Exception(kPasswordSpacesErrorMessage);
+  }
+  if (password != password2) {
+    throw Exception(kPasswordConfirmErrorMessage);
+  }
+  return true;
+}

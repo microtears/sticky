@@ -1,16 +1,41 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:route_annotation/route_annotation.dart';
 import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
+import 'package:sticky/page/functions.dart';
+import 'package:sticky/snackbar.dart';
 import 'package:sticky/sticky_logo.dart';
+import 'package:sticky/data/user.dart' as u;
 
 @RoutePage()
 class StartPage extends StatefulWidget {
+  const StartPage({Key key}) : super(key: key);
+
   @override
   _StartPageState createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage> {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _confirm = TextEditingController();
+  final _logo = StickyLogoController();
+  var buildContext;
+
+  bool get isLoading => _logo.isLoading;
+
+  set isLoading(bool isLoading) {
+    _logo.isLoading = isLoading;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _logo.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +63,7 @@ class _StartPageState extends State<StartPage> {
                     Container(
                       height: 48,
                       child: TextField(
+                        controller: _email,
                         decoration: InputDecoration(
                           labelText: "Email",
                           border: OutlineInputBorder(
@@ -55,6 +81,7 @@ class _StartPageState extends State<StartPage> {
                       height: 48,
                       child: TextField(
                         obscureText: true,
+                        controller: _password,
                         decoration: InputDecoration(
                           labelText: "Password",
                           border: OutlineInputBorder(
@@ -72,6 +99,7 @@ class _StartPageState extends State<StartPage> {
                       height: 48,
                       child: TextField(
                         obscureText: true,
+                        controller: _confirm,
                         decoration: InputDecoration(
                           labelText: "Confirm Password",
                           border: OutlineInputBorder(
@@ -120,35 +148,60 @@ class _StartPageState extends State<StartPage> {
     );
   }
 
-  // Future handleSingUp() async {
-  //   if (isLoading) return;
-  //   showLoading();
-  //   final email = _email.text;
-  //   final password = _password.text;
-  //   final password2 = _password2.text;
-  //   log("sign up:");
-  //   log("email : " + email);
-  //   log("pwd : " + password);
-  //   log("pwd confirm : " + password2);
-  //   try {
-  //     checkPasswordComplexity(password, password2);
-  //     final user = await kAuth.createUserWithEmailAndPassword(
-  //       email: email,
-  //       password: password,
-  //     );
-  //     log("signed up " + user.uid);
-  //     closeLoading();
-  //     backHome();
-  //   } catch (e) {
-  //     handleError(e.toString(), e);
-  //   }
-  // }
-
-  next(BuildContext context) {
-    Navigator.pushNamed(context, ROUTE_COMPLETE_PROFILE_PAGE);
+  Future handleSingUp() async {
+    if (isLoading) return;
+    showLoading();
+    final email = _email.text;
+    final password = _password.text;
+    final password2 = _confirm.text;
+    log("sign up:");
+    log("email : " + email);
+    log("pwd : " + password);
+    log("pwd confirm : " + password2);
+    try {
+      checkPasswordComplexity(password, password2);
+      final user = await kAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      log("signed up " + user.uid);
+      closeLoading();
+      completeProfile();
+    } catch (e) {
+      handleError(e.toString(), e);
+    }
   }
 
-  login(BuildContext context) {
+  void showLoading() {
+    isLoading = true;
+  }
+
+  void closeLoading() {
+    isLoading = false;
+  }
+
+  void handleError(String message, [Object error]) {
+    closeLoading();
+    log(error?.toString());
+    Scaffold.of(buildContext).showSnackBar(StickySnackBar(
+      content: Text(message),
+    ));
+  }
+
+  Future completeProfile() async {
+    final user = await kAuth.currentUser();
+    if (user != null) {
+      u.UserInfo.of(context, listen: false).user = user;
+      Navigator.pushNamed(context, ROUTE_COMPLETE_PROFILE_PAGE);
+    }
+  }
+
+ 
+  void next(BuildContext context) {
+    handleSingUp();
+  }
+
+  void login(BuildContext context) {
     Navigator.pushNamed(context, ROUTE_LOGIN_PAGE);
   }
 }

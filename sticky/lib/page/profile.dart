@@ -12,7 +12,22 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = UserInfo.of(context).user;
@@ -32,74 +47,92 @@ class _ProfilePageState extends State<ProfilePage> {
         );
     final nameStyle = Theme.of(context).textTheme.title.copyWith(fontSize: 24);
     final top = 0.0 +
-        72 * 2 +
+        62 * 2 +
         16 * 2 +
         MediaQuery.of(context).padding.top +
         nameStyle.fontSize;
+
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () => openSettings(context),
-          )
-        ],
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                SizedBox(height: 16),
-                Center(
-                  child: CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(avatar),
-                    radius: 64,
-                  ),
-                ),
-                SizedBox(height: 16),
-                Text(name, style: nameStyle),
-              ],
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
+            <Widget>[
+          SliverAppBar(
+            // pinned: true,
+            expandedHeight: top,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.keyboard_backspace,
+                color: Theme.of(context).accentColor,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
             ),
-            SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(height: top),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text("0", style: numStyle),
-                            Text("笔记", style: textStyle),
-                          ],
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Text("0", style: numStyle),
-                            Text("关注者", style: textStyle),
-                          ],
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Text("0", style: numStyle),
-                            Text("正在关注", style: textStyle),
-                          ],
-                        ),
-                      ],
+            flexibleSpace: FlexibleSpaceBar(
+              collapseMode: CollapseMode.pin,
+              background: Container(
+                padding: EdgeInsets.only(top: 48),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 16),
+                    Center(
+                      child: CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider(avatar),
+                        radius: 64,
+                      ),
                     ),
-                  ),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: MediaQuery.of(context).size.height - top / 2,
-                  ),
+                    SizedBox(height: 16),
+                    Text(name, style: nameStyle),
+                  ],
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: Theme.of(context).accentColor,
+                ),
+                onPressed: () => openSettings(context),
+              )
+            ],
+          ),
+          SliverAppBar(
+            pinned: true,
+            elevation: 0,
+            expandedHeight: 0,
+            backgroundColor: Theme.of(context).backgroundColor,
+            automaticallyImplyLeading: false,
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(0),
+              child: TabBar(
+                controller: _tabController,
+                labelColor: Theme.of(context).textTheme.body1.color,
+                tabs: <Widget>[
+                  Tab(text: "All"),
+                  Tab(text: "Photos"),
+                  Tab(text: "Music"),
                 ],
               ),
-            )
+            ),
+          ),
+        ],
+        body: TabBarView(
+          controller: _tabController,
+          children: <Widget>[
+            Center(child: Text("Empty content")),
+            GridView.count(
+              padding: EdgeInsets.zero,
+              crossAxisCount: 3,
+              childAspectRatio: 1,
+              children: <Widget>[
+                for (var i = 0; i < 30; i++)
+                  CachedNetworkImage(
+                    imageUrl:
+                        "https://source.unsplash.com/random/320x320?index=$i",
+                  ),
+              ],
+            ),
+            Center(child: Text("Empty content")),
           ],
         ),
       ),

@@ -2,7 +2,7 @@ library shine;
 
 import 'dart:ui';
 
-export 'src/progress_indicator.dart' show CircularProgressIndicator;
+// export 'src/progress_indicator.dart' show CircularProgressIndicator;
 import 'package:flutter/services.dart';
 export 'src/non_overlay_behavior.dart';
 export 'src/accent_color_override.dart';
