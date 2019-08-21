@@ -41,6 +41,10 @@ dependencies:
   palette_generator: ^0.1.1
 
   path_provider: ^1.2.0
+  # file_cache_manager
+  flutter_cache_manager: ^1.1.1
+  # memory cache
+  quiver: ^2.0.3
   # editor
   zefyr:
     path: ../zefyr/packages/zefyr

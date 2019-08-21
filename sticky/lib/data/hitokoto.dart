@@ -1,10 +1,8 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
+import 'package:sticky/data/file_cache.dart';
 
 const _kUrl = "https://v1.hitokoto.cn/?c=e";
 
-Future<String> fetchHitokoto() async {
-  final result = await http.read(_kUrl);
-  return (jsonDecode(result) as Map<String, dynamic>)["hitokoto"];
-}
+String _parseHitokoto(json) => (json as Map<String, dynamic>)["hitokoto"];
+
+Future<String> fetchHitokoto() =>
+    fromCache(_kUrl, parse: _parseHitokoto, maxAge: Duration(days: 1));
