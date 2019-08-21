@@ -13,8 +13,16 @@ typedef ParseCallback<T> = T Function(dynamic);
 final _memoryCache = MapCache<String, dynamic>.lru();
 final _fileCache = DiskCacheManager();
 
+@immutable
+class Args {
+  final File source;
+  final ParseCallback parse;
 
-Future _compute(String source) => compute(jsonDecode, source);
+  const Args(this.source, this.parse);
+}
+
+T _decodeAndParse<T>(Args args) =>
+    args.parse(jsonDecode(args.source.readAsStringSync()));
 
 dynamic _noParse(any) => any;
 
@@ -29,9 +37,7 @@ Future<R> fromDiskCache<R>(
 }) =>
     _fileCache
         .getSingleFileEx(url, headers: headers, maxAge: maxAge)
-        .then((e) => decode ? e.readAsString() : e)
-        .then((e) => decode ? _compute(e) : e)
-        .then(parse);
+        .then((e) => decode ? compute(_decodeAndParse, Args(e, parse)) : e);
 
 Future<R> fromCache<R>(
   String url, {
