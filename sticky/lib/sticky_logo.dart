@@ -16,7 +16,6 @@ class _StickyLogoState extends State<StickyLogo>
     with SingleTickerProviderStateMixin {
   StickyLogoController _controller;
   AnimationController _anim;
-  VoidCallback listener;
   final Animatable<double> _kRotationTween = Tween(
     begin: 0.0,
     end: math.pi * 2,
@@ -37,21 +36,6 @@ class _StickyLogoState extends State<StickyLogo>
 
     _controller = widget.controller ?? StickyLogoController();
 
-    void updateController() {
-      if (_controller.isLoading) {
-        _anim.repeat();
-      } else {
-        _anim.animateTo(math.pi * 2).whenComplete(() {
-          _anim..stop();
-        });
-      }
-    }
-
-    listener = () {
-      updateController();
-      setState(() {});
-    };
-    _controller.addListener(listener);
     if (_controller.isLoading) {
       _anim.repeat();
     }
@@ -59,14 +43,33 @@ class _StickyLogoState extends State<StickyLogo>
 
   @override
   void dispose() {
-    super.dispose();
-    _controller.removeListener(listener);
     _anim.dispose();
+    super.dispose();
+  }
+
+  void updateAnimation() {
+    if (_controller.isLoading) {
+      _anim.repeat();
+    } else {
+      _anim.animateTo(math.pi * 2).whenComplete(() {
+        _anim..stop();
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final color = hexColor("#4e53f7");
+    return ValueListenableBuilder(
+      valueListenable: _controller,
+      builder: (context, value, child) {
+        updateAnimation();
+        return buildLogo(context, color);
+      },
+    );
+  }
+
+  GestureDetector buildLogo(BuildContext context, Color color) {
     return GestureDetector(
       onTap: () {
         _controller.isLoading = !_controller.isLoading;
@@ -116,13 +119,17 @@ class _StickyLogoState extends State<StickyLogo>
   }
 }
 
-class StickyLogoController with ChangeNotifier {
+class StickLogoValue {
   bool _isLoading = false;
+}
 
-  bool get isLoading => _isLoading;
+class StickyLogoController extends ValueNotifier<StickLogoValue> {
+  StickyLogoController() : super(StickLogoValue());
+
+  bool get isLoading => value._isLoading;
 
   set isLoading(bool isLoading) {
-    _isLoading = isLoading;
+    value._isLoading = isLoading;
     notifyListeners();
   }
 }

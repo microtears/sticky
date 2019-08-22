@@ -25,7 +25,7 @@ exports.updateDaysOnCreate = functions
         });
     });
 
-// update sticky in some day 
+// update sticky in one day
 exports.updateDaysOnDelete = functions
     //hk
     .region('asia-east2')

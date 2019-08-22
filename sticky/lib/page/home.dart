@@ -11,6 +11,7 @@ import 'package:sticky/page/functions.dart';
 import 'package:sticky/page/library.dart';
 import 'package:sticky/page/search.dart';
 import 'package:sticky/page/waterfall.dart';
+import 'package:sticky/sticky_logo.dart';
 
 @RoutePage(isInitialRoute: true)
 class HomePage extends StatefulWidget {
@@ -65,8 +66,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarWrap(
             child: BottomNavigationBar(
-              backgroundColor:
-                  StickyTheme.of(context).bottomNavigationBarColor,
+              backgroundColor: StickyTheme.of(context).bottomNavigationBarColor,
               elevation: 0,
               currentIndex: currentIndex,
               items: <BottomNavigationBarItem>[
@@ -95,10 +95,8 @@ class _HomePageState extends State<HomePage> {
   Widget buildInit(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          height: 40,
-          width: 40,
-          child: CircularProgressIndicator(),
+        child: StickyLogo(
+          controller: StickyLogoController()..isLoading = true,
         ),
       ),
     );

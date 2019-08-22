@@ -19,8 +19,8 @@ T run<T>(ResultCallback<T> action) {
   return action();
 }
 
-void repeat(int conut, VoidCallback action) {
-  for (var i = 0; i < conut; i++) {
+void repeat(int count, VoidCallback action) {
+  for (var i = 0; i < count; i++) {
     action();
   }
 }
@@ -51,7 +51,7 @@ class TestValueFailedException<T> implements Exception {
 
   @override
   String toString() {
-    String report = "FormatException";
+    String report = "TestValueFailedException";
     if (message != null && "" != message) {
       report = "$report: $message";
     }
