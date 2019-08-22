@@ -1,16 +1,17 @@
 # sticky
 
-A new Flutter project.
+<img src="assets/image/animated_logo.gif" alt="stick_logo" border="0"
+width="112"/>
 
-## Getting Started
+## Design
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<!-- <img src="assets/image/0001.jpg" alt="logo" border="0" /> -->
+![logo](assets/image/0001.jpg)
+![Color palette](assets/image/0002.jpg)
+![Typography](assets/image/0003.jpg)
+![Splash](assets/image/0004.jpg)
+![Welcome](assets/image/0005.jpg)
+![Start](assets/image/0006.jpg)
+![Complete Profile](assets/image/0007.jpg)
+![Sign In](assets/image/0008.jpg)
+![Home](assets/image/0009.jpg)
