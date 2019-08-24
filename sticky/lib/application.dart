@@ -7,7 +7,6 @@ import 'package:route_annotation/route_annotation.dart';
 import 'package:shine/shine.dart';
 import 'package:sticky/application.route.dart' as route;
 import 'package:sticky/background.dart';
-import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/theme.dart';
 import 'package:sticky/data/user.dart';
 import 'package:zefyr/zefyr.dart';

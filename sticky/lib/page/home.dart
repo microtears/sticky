@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:route_annotation/route_annotation.dart';
 import 'package:shine/shine.dart';
@@ -24,12 +24,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: checkSignIn(),
+    return MemorizedFutureBuilder<UserInfo>(
+      future: checkSignIn,
       builder: (context, AsyncSnapshot<UserInfo> snapshot) {
         if (snapshot.hasData && snapshot.data.user != null) {
           return buildHome(context);
         } else {
+          log(snapshot.error.toString());
           return buildInit(context);
         }
       },
@@ -70,15 +71,15 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               currentIndex: currentIndex,
               items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   title: Text("Home"),
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.search),
                   title: Text("Search"),
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.library_books),
                   title: Text("Your Library"),
                 ),

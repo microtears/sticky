@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -17,7 +16,7 @@ class Background extends StatelessWidget {
     Key key,
     this.child,
     this.blurRadius = 0.0,
-    this.opacity=Colors.white,
+    this.opacity = Colors.white,
     this.blurAreas = const [],
   }) : super(key: key);
 

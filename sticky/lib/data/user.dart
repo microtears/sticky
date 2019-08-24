@@ -11,6 +11,9 @@ class UserInfo with ChangeNotifier {
 
   set user(FirebaseUser user) {
     assert(user != null);
+    if (_user?.uid == user.uid) {
+      return;
+    }
     _user = user;
     _data = kFireStore.collection("users").document(user.uid.toString());
     notifyListeners();
@@ -20,6 +23,6 @@ class UserInfo with ChangeNotifier {
 
   DocumentReference get data => _data;
 
-  static UserInfo of(BuildContext context, {bool listen = true}) =>
+  static UserInfo of(BuildContext context, {bool listen = false}) =>
       Provider.of<UserInfo>(context, listen: listen);
 }

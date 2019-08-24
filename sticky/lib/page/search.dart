@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:shine/shine.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/tags.dart';
 

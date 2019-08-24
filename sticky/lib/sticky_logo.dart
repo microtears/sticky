@@ -82,7 +82,7 @@ class _StickyLogoState extends State<StickyLogo>
           children: <Widget>[
             _controller.isLoading
                 ? Padding(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(color),
                     ),
@@ -92,12 +92,12 @@ class _StickyLogoState extends State<StickyLogo>
                         BoxDecoration(shape: BoxShape.circle, color: color),
                   ),
             Container(
-              margin: EdgeInsets.all(2),
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+              margin: const EdgeInsets.all(2),
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.white),
             ),
             Container(
-              margin: EdgeInsets.all(5),
+              margin: const EdgeInsets.all(5),
               decoration: BoxDecoration(shape: BoxShape.circle, color: color),
             ),
             Transform.rotate(

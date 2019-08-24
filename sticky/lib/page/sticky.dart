@@ -220,7 +220,7 @@ class _StickyPageState extends State<StickyPage> {
   void deleteSticky() {}
 
   DocumentReference get stickyReference {
-    final data = UserInfo.of(context).data;
+    final data = UserInfo.of(context, listen: false).data;
     return data.collection("stickies").document(widget.sticky);
   }
 }

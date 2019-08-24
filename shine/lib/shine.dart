@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 export 'src/non_overlay_behavior.dart';
 export 'src/accent_color_override.dart';
 export 'src/bottom_navigation_bar_wrap.dart';
+export 'src/memorized_async.dart';
 
 /// Set translate statusbar
 void setTranslateStatusBar([

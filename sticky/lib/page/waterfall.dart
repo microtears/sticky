@@ -20,19 +20,13 @@ class Waterfall extends StatefulWidget {
 
 class _WaterfallState extends State<Waterfall> {
   final ScrollController _controller = ScrollController();
-  UserInfo userInfo;
+
   @override
   void initState() {
     super.initState();
     _controller.addListener(() {
       setState(() {});
     });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    userInfo = UserInfo.of(context);
   }
 
   @override
@@ -43,7 +37,7 @@ class _WaterfallState extends State<Waterfall> {
 
   @override
   Widget build(BuildContext context) {
-    // final userInfo = UserInfo.of(context);
+    final userInfo = UserInfo.of(context, listen: false);
     final user = userInfo.user;
     final avatar = tryRun(
       kAvatar,
@@ -51,8 +45,9 @@ class _WaterfallState extends State<Waterfall> {
       test: (String e) => e.isNotEmpty,
     );
     final iconSize = 48.0;
-    return StreamBuilder<QuerySnapshot>(
-      stream: userInfo.data.collection("days").snapshots(),
+    count++;
+    return MemorizedStreamBuilder<QuerySnapshot>(
+      stream: () => userInfo.data.collection("days").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return CustomScrollView(
           controller: _controller,
@@ -63,9 +58,10 @@ class _WaterfallState extends State<Waterfall> {
               pinned: true,
               elevation: 0,
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: EdgeInsetsDirectional.only(start: 16, bottom: 16),
+                titlePadding:
+                    const EdgeInsetsDirectional.only(start: 16, bottom: 16),
                 title: Text(
-                  'Record your moment',
+                  'Record your moment ${count}',
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
@@ -75,13 +71,14 @@ class _WaterfallState extends State<Waterfall> {
                     backgroundImage: CachedNetworkImageProvider(avatar),
                     radius: 16,
                   ),
-                  onPressed: () => openProfile(context),
+                  onPressed: () => openSetting(context),
                 )
               ],
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -89,8 +86,8 @@ class _WaterfallState extends State<Waterfall> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Material(
-                          elevation: 8,
-                          shape: CircleBorder(),
+                          elevation: 4,
+                          shape: const CircleBorder(),
                           child: Container(
                             height: iconSize,
                             width: iconSize,
@@ -101,14 +98,14 @@ class _WaterfallState extends State<Waterfall> {
                             child: Center(
                               child: IconButton(
                                 color: Theme.of(context).textTheme.button.color,
-                                icon: Icon(Icons.add),
+                                icon: const Icon(Icons.add),
                                 padding: EdgeInsets.zero,
                                 onPressed: () => openSticky(context, null),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           "Add new",
                           style: Theme.of(context)
@@ -116,16 +113,16 @@ class _WaterfallState extends State<Waterfall> {
                               .body1
                               .copyWith(fontSize: 11),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                       ],
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Material(
-                          elevation: 8,
-                          shape: CircleBorder(),
+                          elevation: 4,
+                          shape: const CircleBorder(),
                           child: Container(
                             height: iconSize,
                             width: iconSize,
@@ -136,14 +133,14 @@ class _WaterfallState extends State<Waterfall> {
                             child: Center(
                               child: IconButton(
                                 color: Theme.of(context).textTheme.button.color,
-                                icon: Icon(Icons.search),
+                                icon: const Icon(Icons.search),
                                 padding: EdgeInsets.zero,
                                 onPressed: widget.onSearchButton,
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           "Search",
                           style: Theme.of(context)
@@ -151,7 +148,7 @@ class _WaterfallState extends State<Waterfall> {
                               .body1
                               .copyWith(fontSize: 11),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   ],
@@ -188,8 +185,8 @@ class _WaterfallState extends State<Waterfall> {
     );
   }
 
-  void openProfile(BuildContext context) {
-    Navigator.pushNamed(context, ROUTE_PROFILE_PAGE);
+  void openSetting(BuildContext context) {
+    Navigator.pushNamed(context, ROUTE_SETTING_PAGE);
   }
 
   Widget buildDaysItem(
@@ -205,20 +202,20 @@ class _WaterfallState extends State<Waterfall> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             // documentID is date
             doc.documentID,
             style: headStyle,
           ),
         ),
-        StreamBuilder(
-          stream: doc.reference.collection("stickies").snapshots(),
+        MemorizedStreamBuilder(
+          stream: () => doc.reference.collection("stickies").snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (handleStreamError(snapshot)) {
               final stickyContainerHeight = 225.0;
               return Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 height: stickyContainerHeight,
                 // color: Colors.greenAccent,
                 child: GridView.builder(
@@ -272,8 +269,8 @@ class _WaterfallState extends State<Waterfall> {
           fontWeight: FontWeight.w200,
           fontSize: 13,
         );
-    return StreamBuilder(
-      stream: sticky.snapshots(),
+    return MemorizedStreamBuilder(
+      stream: () => sticky.snapshots(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (handleStreamError(snapshot)) {
@@ -286,7 +283,7 @@ class _WaterfallState extends State<Waterfall> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 AspectRatio(
                   aspectRatio: 1,
                   child: CachedNetworkImage(
@@ -296,14 +293,14 @@ class _WaterfallState extends State<Waterfall> {
                       child: Container(
                         height: 24,
                         width: 24,
-                        child: CircularProgressIndicator(),
+                        child: const CircularProgressIndicator(),
                       ),
                     ),
                     placeholder: (context, url) => Center(
                       child: Container(
                         height: 24,
                         width: 24,
-                        child: CircularProgressIndicator(),
+                        child: const CircularProgressIndicator(),
                       ),
                     ),
                   ),
@@ -315,7 +312,7 @@ class _WaterfallState extends State<Waterfall> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
               ],
             ),
           );
@@ -324,7 +321,7 @@ class _WaterfallState extends State<Waterfall> {
             child: Container(
               height: 24,
               width: 24,
-              child: CircularProgressIndicator(),
+              child: const CircularProgressIndicator(),
             ),
           );
         }

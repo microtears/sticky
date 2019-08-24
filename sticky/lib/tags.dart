@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:juice/juice.dart';
 import 'package:sticky/util.dart' as util;
 
 class TagsView extends StatefulWidget {

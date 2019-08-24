@@ -15,6 +15,13 @@ class SettingPage extends StatelessWidget {
         appBar: AppBar(
           title: Text("设置"),
           elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.keyboard_backspace,
+              color: Theme.of(context).accentColor,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: ListView(
           children: <Widget>[

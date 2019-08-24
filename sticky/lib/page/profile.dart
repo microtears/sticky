@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:juice/juice.dart';
-import 'package:route_annotation/route_annotation.dart';
 import 'package:sticky/application.route.dart';
 import 'package:sticky/data/kvalue.dart';
 import 'package:sticky/data/user.dart';
 
-@RoutePage()
+//@RoutePage()
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -19,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+//    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -30,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    final user = UserInfo.of(context).user;
+    final user = UserInfo.of(context, listen: false).user;
     final avatar = tryRun(
       kAvatar,
       () => user.photoUrl,
@@ -41,10 +40,10 @@ class _ProfilePageState extends State<ProfilePage>
       () => user.displayName,
       test: (String e) => e.isNotEmpty,
     );
-    final numStyle = Theme.of(context).textTheme.subhead.copyWith();
-    final textStyle = Theme.of(context).textTheme.body1.copyWith(
-          color: Theme.of(context).textTheme.body1.color.withOpacity(0.6),
-        );
+//    final numStyle = Theme.of(context).textTheme.subhead.copyWith();
+//    final textStyle = Theme.of(context).textTheme.body1.copyWith(
+//          color: Theme.of(context).textTheme.body1.color.withOpacity(0.6),
+//        );
     final nameStyle = Theme.of(context).textTheme.title.copyWith(fontSize: 24);
     final top = 0.0 +
         62 * 2 +
