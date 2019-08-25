@@ -46,8 +46,8 @@ class _StickyLogoState extends State<StickyLogo>
 
   @override
   void didUpdateWidget(StickyLogo oldWidget) {
-    oldWidget.controller?.removeListener(listener);
-    final newController = widget.controller ?? StickyLogoController();
+    final newController = widget.controller ?? StickyLogoController()
+      ..isLoading = _controller.isLoading;
     if (newController != _controller) {
       _controller.removeListener(listener);
       _controller = newController;
