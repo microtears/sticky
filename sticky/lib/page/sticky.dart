@@ -46,7 +46,6 @@ class _StickyPageState extends State<StickyPage> {
 
   @override
   void initState() {
-    super.initState();
     rootBundle.loadString(Resources.doc).then((value) => setState(() {
           document = NotusDocument.fromJson(jsonDecode(value) as List);
           text = ZefyrController(document);
@@ -59,21 +58,26 @@ class _StickyPageState extends State<StickyPage> {
           titleStartOffset = min(52, 16 + scrollController.offset / 5);
         });
       });
+
+    super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
+    subscription?.cancel();
     subscription = stickyReference
         .snapshots()
         .listen((data) => setState(() => snapshot = data));
+
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    super.dispose();
     scrollController.dispose();
     subscription.cancel();
+
+    super.dispose();
   }
 
   @override
@@ -139,25 +143,25 @@ class _StickyPageState extends State<StickyPage> {
               ),
             ],
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Row(
-              children: <Widget>[
-                for (final format in kTextFormats)
-                  IconButton(
-                    icon: Icon(format.icon),
-                    onPressed: () => updateFormat(format),
-                  ),
-              ],
-            ),
-          ),
-          AnimatedContainer(
-            child: buildMoreSetting(context),
-            duration: kAnimeDurationFast,
-            transform: Matrix4.identity()..translate(0.0, moreSettingTop),
-          ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: Row(
+          //     children: <Widget>[
+          //       for (final format in kTextFormats)
+          //         IconButton(
+          //           icon: Icon(format.icon),
+          //           onPressed: () => updateFormat(format),
+          //         ),
+          //     ],
+          //   ),
+          // ),
+          // AnimatedContainer(
+          //   child: buildMoreSetting(context),
+          //   duration: kAnimeDurationFast,
+          //   transform: Matrix4.identity()..translate(0.0, moreSettingTop),
+          // ),
         ],
       ),
     );

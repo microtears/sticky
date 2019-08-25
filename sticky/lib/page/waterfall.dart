@@ -10,9 +10,9 @@ import 'package:sticky/data/user.dart';
 import 'package:sticky/util.dart';
 
 class Waterfall extends StatefulWidget {
-  final VoidCallback onSearchButton;
+  final VoidCallback onSearch;
 
-  const Waterfall({Key key, this.onSearchButton}) : super(key: key);
+  const Waterfall({Key key, this.onSearch}) : super(key: key);
 
   @override
   _WaterfallState createState() => _WaterfallState();
@@ -23,16 +23,16 @@ class _WaterfallState extends State<Waterfall> {
 
   @override
   void initState() {
-    super.initState();
     _controller.addListener(() {
       setState(() {});
     });
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -135,7 +135,7 @@ class _WaterfallState extends State<Waterfall> {
                                 color: Theme.of(context).textTheme.button.color,
                                 icon: const Icon(Icons.search),
                                 padding: EdgeInsets.zero,
-                                onPressed: widget.onSearchButton,
+                                onPressed: widget.onSearch,
                               ),
                             ),
                           ),

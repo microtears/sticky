@@ -32,8 +32,11 @@ class _StartPageState extends State<StartPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _logo.dispose();
+    _email.dispose();
+    _password.dispose();
+    _confirm.dispose();
+    super.dispose();
   }
 
   @override
@@ -196,7 +199,6 @@ class _StartPageState extends State<StartPage> {
     }
   }
 
- 
   void next(BuildContext context) {
     handleSingUp();
   }

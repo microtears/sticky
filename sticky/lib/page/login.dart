@@ -31,8 +31,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _logo.dispose();
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
   }
 
   @override
@@ -174,5 +176,4 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacementNamed(context, ROUTE_HOME);
     }
   }
-
 }

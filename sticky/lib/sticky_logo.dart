@@ -16,6 +16,9 @@ class _StickyLogoState extends State<StickyLogo>
     with SingleTickerProviderStateMixin {
   StickyLogoController _controller;
   AnimationController _anim;
+
+  VoidCallback listener;
+
   final Animatable<double> _kRotationTween = Tween(
     begin: 0.0,
     end: math.pi * 2,
@@ -26,13 +29,13 @@ class _StickyLogoState extends State<StickyLogo>
   @override
   void initState() {
     super.initState();
-
+    listener = () {
+      setState(() {});
+    };
     _anim = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
-    )..addListener(() {
-        setState(() {});
-      });
+    )..addListener(listener);
 
     _controller = widget.controller ?? StickyLogoController();
 
@@ -42,8 +45,24 @@ class _StickyLogoState extends State<StickyLogo>
   }
 
   @override
+  void didUpdateWidget(StickyLogo oldWidget) {
+    oldWidget.controller?.removeListener(listener);
+    final newController = widget.controller ?? StickyLogoController();
+    if (newController != _controller) {
+      _controller.removeListener(listener);
+      _controller = newController;
+      _controller.addListener(listener);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     _anim.dispose();
+    _controller.removeListener(listener);
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 

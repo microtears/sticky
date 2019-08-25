@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shine/shine.dart';
 import 'package:zefyr/zefyr.dart';
@@ -146,18 +147,32 @@ class ThemeController extends ValueNotifier<ThemeData> {
   }
 }
 
-class StickyTheme extends Theme {
-  const StickyTheme({
-    Key key,
-    @required ThemeData data,
-    bool isMaterialAppTheme = false,
-    @required Widget child,
-  }) : super(
-          key: key,
-          data: data,
-          isMaterialAppTheme: isMaterialAppTheme,
-          child: child,
-        );
+class StickyTheme extends StatelessWidget {
+  final Widget child;
+
+  const StickyTheme({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ThemeController>(
+      builder: (context, controller, child) =>
+          AnnotatedRegion<SystemUiOverlayStyle>(
+        value: (controller.theme.brightness == Brightness.light
+                ? SystemUiOverlayStyle.dark
+                : SystemUiOverlayStyle.light)
+            .copyWith(
+                statusBarColor:
+                    controller.stickyTheme.backgroundColor.withOpacity(0.0)),
+        child: Theme(
+          data: controller.theme,
+          child: ZefyrTheme(
+            data: controller.stickyTheme.zefyrThemeData,
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
 
   static StickyThemeData of(BuildContext context,
       {bool shadowThemeOnly = false}) {

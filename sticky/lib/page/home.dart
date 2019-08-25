@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:async/async.dart';
+
 import 'package:flutter/material.dart';
 import 'package:route_annotation/route_annotation.dart';
 import 'package:shine/shine.dart';
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
               index: currentIndex,
               children: <Widget>[
                 Waterfall(
-                  onSearchButton: () => setState(() {
+                  onSearch: () => setState(() {
                     currentIndex = 1;
                   }),
                 ),
